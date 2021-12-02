@@ -9,9 +9,8 @@ namespace AoC2022
         {
             var data = File.ReadAllLines("Day2.txt")
                 .Select(l => l.Split(' '))
-                .Select(l => (direction: l[0], amount: int.Parse(l[1])))
-                .GroupBy(key => key.direction, val => val.amount, (dir, val) => (dir, val: val.Sum()))
-                .ToDictionary(key => key.dir, val => val.val);
+                .GroupBy(key => key[0], val => int.Parse(val[1]), (dir, val) => (dir, amount: val.Sum()))
+                .ToDictionary(key => key.dir, val => val.amount);
 
             return (data["down"] - data["up"]) * data["forward"];
         }
