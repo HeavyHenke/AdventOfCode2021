@@ -1,9 +1,8 @@
-﻿using System;
-using AoC2021;
+﻿using AoC2021;
 
 
 DateTime start = DateTime.Now;
-string result = new Day11().B()?.ToString() ?? " ";
+string result = new Day12().B()?.ToString() ?? " ";
 DateTime stop = DateTime.Now;
 
 Console.WriteLine("It took " + (stop - start).TotalSeconds);
