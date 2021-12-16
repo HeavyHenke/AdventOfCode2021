@@ -2,7 +2,7 @@
 
 
 DateTime start = DateTime.Now;
-string result = new Day13().B()?.ToString() ?? " ";
+string result = new Day15().B()?.ToString() ?? " ";
 DateTime stop = DateTime.Now;
 
 Console.WriteLine("It took " + (stop - start).TotalSeconds);
