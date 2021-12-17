@@ -70,32 +70,31 @@ public class Day15
             }
         }
 
-        var visited = new int[lines.Length*5][];
-        for (int i = 0; i < visited.Length; i++)
-        {
-            visited[i] = new int[lines[0].Length*5];
-            Array.Fill(visited[i], int.MaxValue);
-        }
+        var height = costs.Length;
+        var width = costs[0].Length;
+        int goalPos = height - 1 + width - 1;
+        
+        var visited = new bool[lines.Length*5][];
+        for (int i = 0; i < visited.Length; i++) 
+            visited[i] = new bool[lines[0].Length * 5];
 
-        var searchList = new SortedSet<(int risk, int x, int y)> { (0, 0, 0) };
+        var searchList = new PriorityQueue<(int risk, int x, int y), int>();
+        searchList.Enqueue((0,0,0), 0);
 
         while (searchList.Count > 0)
         {
-            var n = searchList.First();
-            searchList.Remove(n);
-
-            foreach( var (x,y) in GetNeighbours(n.x, n.y, costs[0].Length, costs.Length))
+            var n = searchList.Dequeue();
+            foreach( var (x,y) in GetNeighbours(n.x, n.y, width, height))
             {
-                var risk = n.risk + costs[y][x];
-                if (risk < visited[y][x])
+                if (visited[y][x] == false)
                 {
-                    visited[y][x] = risk;
-                    if (y == costs.Length - 1 && x == costs[y].Length - 1)
-                    {
-                        return risk;
-                    }
+                    visited[y][x] = true;
 
-                    searchList.Add((risk, x, y));
+                    var risk = n.risk + costs[y][x];
+                    if (x + y == goalPos)
+                        return risk;
+
+                    searchList.Enqueue((risk, x, y), risk);
                 }
             }
         }
